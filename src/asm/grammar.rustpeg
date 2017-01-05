@@ -1,0 +1,56 @@
+use asm::parser::*;
+
+#[pub]
+program -> Vec<ObjectR>
+    = end_of_line*
+      fo:first_object?
+      // strictly speaking, should enforce EOLS between first obj and later ones
+      o:(object ** (end_of_line+))
+      end_of_line*
+      white { if let Some(f) = fo { let mut v = vec![f]; v.extend_from_slice(&o); v } else { o } }
+
+first_object -> ObjectR
+=   code:move_lines
+    end_of_line*
+    { ObjectR { label: Ident::from_str("MAIN"), code: code }}
+
+object -> ObjectR
+    =   label:label_line
+        end_of_line*
+        code:move_lines
+    { ObjectR { label: Ident::from_str(label), code: code } }
+
+// types: user registers, system registers, immediates, labels
+
+label_line -> &'input str
+    = white s:$( ident ) white ":" {s}
+
+move_lines -> Vec<MoveR>
+    = l:(move_line ** (end_of_line+)) { l }
+
+move_line -> MoveR
+    = white a:source_reg white "->" white b:dest_reg { MoveR(a, b) }
+
+// types: user registers, system registers, immediates, labels
+
+source_reg -> RegisterR
+    = "$"  imm:$("-"? [0-9]+) { RegisterR::Immed(imm.parse::<i16>().unwrap()) }
+    / "@"  u:$(ident) { RegisterR::User(Ident::from_str(u)) }
+    / "%"  u:$(ident) { RegisterR::System(Ident::from_str(u)) }
+    / ":"  u:$(ident) { RegisterR::Label(Ident::from_str(u)) }
+
+dest_reg -> RegisterR
+    = "@"  u:$(ident) { RegisterR::User(Ident::from_str(u)) }
+    / "%"  u:$(ident) { RegisterR::System(Ident::from_str(u)) }
+
+// basic tokens
+
+ident -> &'input str
+    = $([a-zA-Z_\-0-9]+)
+
+end_of_line
+    = white "\n"
+    / white ";" [^\n]* "\n"
+
+white
+    = [ \t]*
