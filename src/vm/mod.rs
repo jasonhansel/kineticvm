@@ -1,8 +1,6 @@
 
 mod memory;
 use std::io::Write;
-
-use super::Register;
 use super::{sys_registers, transmute_slice};
 
 use self::memory::*;

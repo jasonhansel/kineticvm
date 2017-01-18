@@ -1,5 +1,5 @@
-use super::sys_registers;
-use super::Register;
+use super::super::sys_registers;
+use super::super::Register;
 
 use std::io::Write;
 use super::memory::*;

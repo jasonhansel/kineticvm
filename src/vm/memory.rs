@@ -1,4 +1,4 @@
-use super::Register;
+use super::super::Register;
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub struct MemoryPtr(u16);

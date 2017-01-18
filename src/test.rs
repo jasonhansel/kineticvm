@@ -1,8 +1,8 @@
 // must enable beta for this
 
-extern crate test;
-use super::*;
-use test::test::Bencher;
+// extern crate test;
+use vm::execute_program;
+// use test::test::Bencher;
 use asm::assemble;
 
 
@@ -50,6 +50,4 @@ macro_rules! bench_program {
 test_program!(addition);
 test_program!(loops);
 test_program!(memory);
-// test_program!(memory_types);
-
-bench_program!(memory_types);
+test_program!(memory_types);
