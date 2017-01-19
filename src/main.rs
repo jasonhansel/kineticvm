@@ -41,6 +41,7 @@ mod sys_registers {
 	pub const MEM_OBJECT_SIZE : Register = Register(12);	
 }
 
+
 unsafe fn transmute_slice<'a, U, T>(slice: &'a [T]) -> &'a [U] {
 	slice::from_raw_parts(
 		slice.as_ptr() as *const U,
@@ -49,37 +50,42 @@ unsafe fn transmute_slice<'a, U, T>(slice: &'a [T]) -> &'a [U] {
 }
 
 
-
-
+/// The entry point for the CLI.
 fn main() {
 	let mut args = env::args();
-	// let program_file = args.nth(1).unwrap();
 
 	match args.nth(1).as_ref().map(|x| &**x) {
 		Some("assemble") => {
-			let program_file = args.next().unwrap();
-			let mut program_code = String::new();
+			// If the first argument is "assemble", we first get the filename
+			// and read the file's contents into a string.
+			let filename = args.next().unwrap();
+			let mut code = String::new();
+			let mut file = File::open(filename).unwrap();
+			file.read_to_string(&mut code).unwrap();
 
-			let mut file = File::open(program_file).unwrap();
-			file.read_to_string(&mut program_code).unwrap();
-			stdout().write(&assemble(&program_code)).unwrap();
-
+			// Now we assemble the file's contents and write it to STDOUT.
+			let object = assemble(&code);
+			stdout().write(&object).unwrap();
 		}
 		Some("execute") => {
-			let program_file = args.next().unwrap();
-			let mut program_code : Vec<u8> = Vec::new();
+			// If the first argument is "execute", we first get the name of the file and
+			// read the bytecode it contains into a string.
+			let filename = args.next().unwrap();
+			let mut object : Vec<u8> = Vec::new();
+			let mut file = File::open(filename).unwrap();
+			file.read_to_end(&mut object).unwrap();
 
-			let mut file = File::open(program_file).unwrap();
-			file.read_to_end(&mut program_code).unwrap();
-
-			execute_program(&program_code, &mut stdout());
-			
+			// Now we execute it, printing the program's output to STDOUT.
+			execute_program(&object, &mut stdout());
 		}
-		// TODO: improve this
 		_ => {
+			// Print usage information.
 			println!(r#"
-Usage: ttavm execute <file>
-       Executes the assembly code contained in <file>.
+Usage: kineticvm assemble <file>
+       Assemble the code contained in <file>, printing the resulting bytecode to STDOUT.
+
+       kineticvm execute <file>
+       Executes the bytecode contained in <file>.
 "#)
 		}
 	}
