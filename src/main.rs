@@ -23,6 +23,7 @@ use vm::execute_program;
 pub struct Register(pub u16);
 
 
+/// System registers
 mod sys_registers {
 	use super::Register;
 	pub const CODE_OBJECT : Register = Register(0);
@@ -74,6 +75,7 @@ fn main() {
 			execute_program(&program_code, &mut stdout());
 			
 		}
+		// TODO: improve this
 		_ => {
 			println!(r#"
 Usage: ttavm execute <file>

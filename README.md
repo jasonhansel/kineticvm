@@ -1,4 +1,4 @@
-**KineticVM** is a bytecode assembler and virtual machine for a [transport-triggered architecture](https://en.wikipedia.org/wiki/Transport_triggered_architecture). In other words, it simulates a [register machine](https://en.wikipedia.org/wiki/Register_machine) whose only instruction is "move." All other operations are performed through special *system registers*.
+**KineticVM** is a bytecode assembler and toy virtual machine for a [transport-triggered architecture](https://en.wikipedia.org/wiki/Transport_triggered_architecture). In other words, it simulates a [register machine](https://en.wikipedia.org/wiki/Register_machine) whose only instruction is "move." All other operations are performed through special *system registers*.
 
 For instance, the following KineticVM assembly code prints the sum of 2 and 3:
 ```
@@ -21,4 +21,17 @@ $ ./target/debug/kineticvm execute test.o
 5
 ```
 
-Further documentation is forthcoming. In the meantime, more code samples, with corresponding expected output, are contained in the `tests` directory.
+## Documentation
+
+Documentation for the full architecture is forthcoming.  In the meantime, more code samples, with corresponding expected output, are contained in the `tests` directory.
+
+The codebase itself is not fully documented at the moment, but `rustdoc` documentation can be generated with `./generate-docs.sh` (currently tested only on Linux).
+
+## Future Plans
+
+* Add more documentation (see above).
+* Make the assembler and CLI simpler and more user-friendly.
+* Add more features by expanding the set of system registers. The [MIPS instruction set](http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html) may be a useful source of inspiration. Writing larger tests may make it clearer what features are needed.
+* Implement a proper garbage collector. Currently, the VM distinguishes between two types (integers and pointers); this feature should allow for [precise collection](https://en.wikipedia.org/wiki/Tracing_garbage_collection#Precise_vs._conservative_and_internal_pointers).
+* Create an integrated JIT compiler. It may be useful to have an LLVM backend, like [the one included in HHVM](http://hhvm.com/blog/10205/llvm-code-generation-in-hhvm).
+* Write a compiler for a (reasonably) high-level language that targets KineticVM.

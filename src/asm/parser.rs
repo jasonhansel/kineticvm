@@ -13,8 +13,18 @@ impl Ident {
 	}
 }
 
+#[doc(hidden)]
+#[cfg(not(doc))]
 mod grammar {
     include!(concat!(env!("OUT_DIR"), "/grammar.rs"));
+}
+
+#[cfg(doc)]
+mod grammar {
+	use super::ObjectR;
+	pub fn program(code: &str) -> Option<Vec<ObjectR>> {
+		None
+	}
 }
 
 #[derive(Clone, Debug)]
