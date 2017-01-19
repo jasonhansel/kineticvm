@@ -35,6 +35,7 @@ mod sys_registers {
 	pub const MEM_OFFSET : Register = Register(10);
 	pub const MEM_VALUE : Register = Register(11);
 	pub const MEM_OBJECT_SIZE : Register = Register(12);	
+	pub const PRODUCT : Register = Register(13);
 }
 
 

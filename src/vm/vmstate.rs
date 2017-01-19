@@ -12,6 +12,13 @@ fn add_values(lhs: Value, rhs: Value) -> Value {
 	}
 }
 
+fn mult_values(lhs: Value, rhs: Value) -> Value {
+	match (lhs, rhs) {
+		(Value::Int(l), Value::Int(r)) => Value::Int(l * r),
+		_ => Value::Int(0)
+	}
+}
+
 pub struct VMState {
 	memory: Memory
 }
@@ -43,6 +50,11 @@ impl VMState {
 				let lhs = self.register_read(sys_registers::LHS);
 				let rhs = self.register_read(sys_registers::RHS);
 				return add_values(lhs, rhs);
+			},
+			sys_registers::PRODUCT => {
+				let lhs = self.register_read(sys_registers::LHS);
+				let rhs = self.register_read(sys_registers::RHS);
+				return mult_values(lhs, rhs);
 			},
 			sys_registers::NOT => {
 				let lhs = self.register_read(sys_registers::LHS);

@@ -51,3 +51,4 @@ test_program!(addition);
 test_program!(loops);
 test_program!(memory);
 test_program!(memory_types);
+test_program!(factorial);

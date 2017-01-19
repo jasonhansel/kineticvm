@@ -11,7 +11,7 @@ use std::collections::HashMap;
 
 
 
-const SYSTEM_REGISTERS : [(&'static str, Register); 13] = [
+const SYSTEM_REGISTERS : [(&'static str, Register); 14] = [
 	("LHS",  sys_registers::LHS),
 	("RHS",  sys_registers::RHS),
 	("SUM",  sys_registers::SUM),
@@ -25,6 +25,7 @@ const SYSTEM_REGISTERS : [(&'static str, Register); 13] = [
 	("MEM_VALUE",  sys_registers::MEM_VALUE),
 	("MEM_OBJECT_SIZE",  sys_registers::MEM_OBJECT_SIZE),
 	("CODE_OBJECT",  sys_registers::CODE_OBJECT),
+	("PRODUCT",  sys_registers::PRODUCT),
 ];
 
 fn make_register_map<'a> (objects : &Vec<ObjectR<'a>>, registers: &mut RangeFrom<u16>) -> HashMap<RegisterR<'a>, Register> {
