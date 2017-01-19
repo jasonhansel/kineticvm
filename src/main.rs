@@ -1,7 +1,3 @@
-// #![feature(test)]
-
-extern crate farmhash;
-
 mod vm;
 mod asm;
 

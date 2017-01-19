@@ -1,19 +1,15 @@
 use self::grammar::*;
 
 
-extern crate farmhash;
-use farmhash::hash64;
-
 #[derive(Copy, Clone, Debug, Hash, Eq, PartialEq)]
-pub struct Ident(u64);
+pub struct Ident<'a>(&'a str);
 
-impl Ident {
+impl<'a> Ident<'a> {
 	pub fn from_str(str: &str) -> Ident {
-		Ident(hash64(str.as_bytes()))
+		Ident(str)
 	}
 }
 
-#[doc(hidden)]
 #[cfg(not(doc))]
 mod grammar {
     include!(concat!(env!("OUT_DIR"), "/grammar.rs"));
@@ -28,20 +24,20 @@ mod grammar {
 }
 
 #[derive(Clone, Debug)]
-pub struct ObjectR {
-	pub label: Ident,
-	pub code: Vec<MoveR>
+pub struct ObjectR<'a> {
+	pub label: Ident<'a>,
+	pub code: Vec<MoveR<'a>>
 }
 
 #[derive(Clone, Debug)]
-pub struct MoveR(pub RegisterR, pub RegisterR);
+pub struct MoveR<'a>(pub RegisterR<'a>, pub RegisterR<'a>);
 
 #[derive(Clone, Debug, Hash, Eq, PartialEq)]
-pub enum RegisterR {
+pub enum RegisterR<'a> {
 	Immed(i16),
-	User(Ident),
-	System(Ident),
-	Label(Ident)
+	User(Ident<'a>),
+	System(Ident<'a>),
+	Label(Ident<'a>)
 }
 
 

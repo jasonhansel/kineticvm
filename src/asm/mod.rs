@@ -27,7 +27,7 @@ const SYSTEM_REGISTERS : [(&'static str, Register); 13] = [
 	("CODE_OBJECT",  sys_registers::CODE_OBJECT),
 ];
 
-fn make_register_map<'a> (objects : &Vec<ObjectR>, registers: &mut RangeFrom<u16>) -> HashMap<RegisterR, Register> {
+fn make_register_map<'a> (objects : &Vec<ObjectR<'a>>, registers: &mut RangeFrom<u16>) -> HashMap<RegisterR<'a>, Register> {
 	let mut register_map : HashMap<RegisterR, Register> =
 		SYSTEM_REGISTERS.iter().map(|&(a,b)|
 			(RegisterR::System(Ident::from_str(a)), b)
@@ -47,7 +47,7 @@ fn make_register_map<'a> (objects : &Vec<ObjectR>, registers: &mut RangeFrom<u16
 	register_map
 }
 
-fn make_label_map<'a>(objects: &Vec<ObjectR>) -> HashMap<Ident, i16> {
+fn make_label_map<'a>(objects: &Vec<ObjectR<'a>>) -> HashMap<Ident<'a>, i16> {
 	let mut labels : HashMap<Ident, i16> = HashMap::new();
 	let mut move_index = 0;
 	for object in objects {
@@ -57,7 +57,7 @@ fn make_label_map<'a>(objects: &Vec<ObjectR>) -> HashMap<Ident, i16> {
 	return labels;
 }
 
-fn make_register_file(last_id : u16, register_map: &HashMap<RegisterR, Register>, labels: HashMap<Ident, i16>) -> Vec<i16> {
+fn make_register_file<'a>(last_id : u16, register_map: &HashMap<RegisterR<'a>, Register>, labels: HashMap<Ident<'a>, i16>) -> Vec<i16> {
 	let mut registers = vec![0 as i16; last_id as usize];
 	for (val, &Register(reg)) in register_map {
 		if let &RegisterR::Immed(i) = val {
@@ -70,7 +70,7 @@ fn make_register_file(last_id : u16, register_map: &HashMap<RegisterR, Register>
 	return registers;
 }
 
-fn encode_objects<'a> (objects: Vec<ObjectR>) -> Vec<i16> {
+fn encode_objects<'a> (objects: Vec<ObjectR<'a>>) -> Vec<i16> {
 	
 	let labels: HashMap<Ident, i16> = make_label_map(&objects);
 
