@@ -1,3 +1,4 @@
+pub use super::super::Register;
 use self::grammar::*;
 
 
@@ -36,7 +37,7 @@ pub struct MoveR<'a>(pub RegisterR<'a>, pub RegisterR<'a>);
 pub enum RegisterR<'a> {
 	Immed(i16),
 	User(Ident<'a>),
-	System(Ident<'a>),
+	System(Register),
 	Label(Ident<'a>)
 }
 

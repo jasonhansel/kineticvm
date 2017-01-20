@@ -3,7 +3,7 @@ mod parser;
 use self::parser::*;
 
 use std::ops::RangeFrom;
-use super::{Register, sys_registers, transmute_slice};
+use super::{sys_registers, transmute_slice};
 
 
 use std::collections::HashMap;
@@ -30,8 +30,8 @@ const SYSTEM_REGISTERS : [(&'static str, Register); 14] = [
 
 fn make_register_map<'a> (objects : &Vec<ObjectR<'a>>, registers: &mut RangeFrom<u16>) -> HashMap<RegisterR<'a>, Register> {
 	let mut register_map : HashMap<RegisterR, Register> =
-		SYSTEM_REGISTERS.iter().map(|&(a,b)|
-			(RegisterR::System(Ident::from_str(a)), b)
+		SYSTEM_REGISTERS.iter().map(|&(_,b)|
+			(RegisterR::System(b), b)
 		).collect();
 
 	for object in objects {

@@ -3,9 +3,9 @@
 For instance, the following KineticVM assembly code prints the sum of 2 and 3:
 ```
 ; Move the constant "2" into the system register LHS
-$2 -> %LHS
+2 -> %LHS
 ; Move the constant "3" into the system register RHS.
-$3 -> %RHS
+3 -> %RHS
 ; The value of the SUM register is always equal to the sum of LHS and RHS.
 ; Here, therefore, it contains the number 5. 
 ; Moving a value into the system register OUT prints it to the screen.
