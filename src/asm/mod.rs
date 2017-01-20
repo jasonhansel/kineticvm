@@ -1,47 +1,27 @@
 
 mod parser;
 use self::parser::*;
-
 use std::ops::RangeFrom;
 use super::{sys_registers, transmute_slice};
-
-
 use std::collections::HashMap;
 
 
-
-
-const SYSTEM_REGISTERS : [(&'static str, Register); 14] = [
-	("LHS",  sys_registers::LHS),
-	("RHS",  sys_registers::RHS),
-	("SUM",  sys_registers::SUM),
-	("NOT",  sys_registers::NOT),
-	("OUT",  sys_registers::OUT),
-	("HALT",  sys_registers::HALT),
-	("PC",  sys_registers::PC),
-	("SKIP_INSTR",  sys_registers::SKIP_INSTR),
-	("MEM_PTR",  sys_registers::MEM_PTR),
-	("MEM_OFFSET",  sys_registers::MEM_OFFSET),
-	("MEM_VALUE",  sys_registers::MEM_VALUE),
-	("MEM_OBJECT_SIZE",  sys_registers::MEM_OBJECT_SIZE),
-	("CODE_OBJECT",  sys_registers::CODE_OBJECT),
-	("PRODUCT",  sys_registers::PRODUCT),
-];
+fn add_to_register_map<'a>(register_map: &mut HashMap<RegisterR<'a>, Register>, register: RegisterR<'a>, registers: &mut RangeFrom<u16>) {
+	if !register_map.contains_key(&register) {
+		let new_register = match register {
+			RegisterR::System(u) => u,
+			_ => Register(registers.next().unwrap())
+		};
+		register_map.insert(register, new_register);
+	}
+}
 
 fn make_register_map<'a> (objects : &Vec<ObjectR<'a>>, registers: &mut RangeFrom<u16>) -> HashMap<RegisterR<'a>, Register> {
-	let mut register_map : HashMap<RegisterR, Register> =
-		SYSTEM_REGISTERS.iter().map(|&(_,b)|
-			(RegisterR::System(b), b)
-		).collect();
-
+	let mut register_map : HashMap<RegisterR, Register> = HashMap::new();
 	for object in objects {
 		for &MoveR(ref src, ref dest) in &object.code {
-			register_map.entry(src.clone()).or_insert_with(|| {
-				Register(registers.next().unwrap())
-			});
-			register_map.entry(dest.clone()).or_insert_with(|| {
-				Register(registers.next().unwrap())
-			});
+			add_to_register_map(&mut register_map, src.clone(), registers);
+			add_to_register_map(&mut register_map, dest.clone(), registers);
 		}
 	}
 
@@ -75,7 +55,7 @@ fn encode_objects<'a> (objects: Vec<ObjectR<'a>>) -> Vec<i16> {
 	
 	let labels: HashMap<Ident, i16> = make_label_map(&objects);
 
-	let mut register_ids = (SYSTEM_REGISTERS.len() as u16)..;
+	let mut register_ids = (sys_registers::MAX_SYS_REGISTER + 1)..;
 	let register_map = make_register_map(&objects, &mut register_ids);
 	let last_id = register_ids.next().unwrap();
 	let mut registers = make_register_file(last_id, &register_map, labels);

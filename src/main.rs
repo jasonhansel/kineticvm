@@ -20,7 +20,7 @@ pub struct Register(pub u16);
 
 
 /// System registers
-mod sys_registers {
+pub mod sys_registers {
 	use super::Register;
 	pub const CODE_OBJECT : Register = Register(0);
 	pub const LHS : Register = Register(1);
@@ -36,6 +36,8 @@ mod sys_registers {
 	pub const MEM_VALUE : Register = Register(11);
 	pub const MEM_OBJECT_SIZE : Register = Register(12);	
 	pub const PRODUCT : Register = Register(13);
+
+	pub const MAX_SYS_REGISTER : u16 = 13;
 }
 
 
