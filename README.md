@@ -23,7 +23,7 @@ $ ./target/debug/kineticvm execute test.o
 
 ## Documentation
 
-Documentation for the full architecture is forthcoming.  In the meantime, more code samples, with corresponding expected output, are contained in the `tests` directory.
+Documentation for the full architecture is [available on the wiki](https://github.com/jasonhansel/kineticvm/wiki). More code samples, with corresponding expected output, are contained in the `tests` directory.
 
 The codebase itself is not fully documented at the moment, but `rustdoc` documentation can be generated with `./generate-docs.sh` (currently tested only on Linux).
 

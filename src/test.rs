@@ -48,6 +48,7 @@ macro_rules! bench_program {
 }
 
 test_program!(addition);
+test_program!(label_addr);
 test_program!(loops);
 test_program!(memory);
 test_program!(memory_types);
