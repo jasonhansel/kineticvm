@@ -37,6 +37,10 @@ pub mod sys_registers {
 	pub const DIFF : Register = Register(20);
 	pub const QUOTIENT : Register = Register(21);
 
+	// Comparison
+	pub const MAX : Register = Register(22);
+	pub const MIN : Register = Register(23);
+
 	// Shifts
 	pub const SHIFT_L : Register = Register(14);
 	pub const SHIFT_LR : Register = Register(15);

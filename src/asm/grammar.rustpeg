@@ -67,6 +67,8 @@ system_reg -> Register =
     / "SHIFT_L" { sys_registers::SHIFT_L }
     / "SKIP_INSTR" { sys_registers::SKIP_INSTR }
     / "SUM" { sys_registers::SUM }
+    / "MAX" { sys_registers::MAX }
+    / "MIN" { sys_registers::MIN }
 
 
 // basic tokens

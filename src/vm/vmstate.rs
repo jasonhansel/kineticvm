@@ -2,6 +2,7 @@ use super::super::sys_registers;
 use super::super::Register;
 
 use std::io::Write;
+use std::cmp;
 use super::memory::*;
 
 
@@ -62,6 +63,8 @@ impl VMState {
 			sys_registers::BIT_AND => { self.perform_operation(&|l, r| { l & r }) },
 			sys_registers::BIT_OR => { self.perform_operation(&|l, r| { l | r }) },
 			sys_registers::BIT_XOR => { self.perform_operation(&|l, r| { l ^ r }) },
+			sys_registers::MAX => { self.perform_operation(&|l, r| { cmp::max(l, r) }) },
+			sys_registers::MIN => { self.perform_operation(&|l, r| { cmp::min(l, r) }) },
 			
 			sys_registers::NOT => { self.perform_operation(&|l, _| { if l == 0 { 1 } else { 0 } }) },
 			sys_registers::MEM_OBJECT_SIZE => {

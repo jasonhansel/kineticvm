@@ -10,4 +10,9 @@
     %QUOTIENT -> %OUT ; expect 3 (round away from 0)
     -2 -> %RHS
     %QUOTIENT -> %OUT ; expect -3 (round away from 0)
-    
+
+
+    5 -> %LHS
+    -3 -> %RHS
+    %MAX -> %OUT
+    %MIN -> %OUT
