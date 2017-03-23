@@ -56,6 +56,7 @@ system_reg -> Register =
     / "MEM_OBJECT_SIZE" { sys_registers::MEM_OBJECT_SIZE }
     / "MEM_OFFSET" { sys_registers::MEM_OFFSET }
     / "MEM_PTR" { sys_registers::MEM_PTR }
+    / "EQ" { sys_registers::EQ }
     / "MEM_VALUE" { sys_registers::MEM_VALUE }
     / "NOT" { sys_registers::NOT }
     / "OUT" { sys_registers::OUT }

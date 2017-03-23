@@ -55,3 +55,4 @@ test_program!(memory);
 test_program!(memory_types);
 test_program!(factorial);
 test_program!(bitwise);
+test_program!(equality);

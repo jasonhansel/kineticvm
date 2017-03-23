@@ -42,6 +42,13 @@ impl VMState {
 				}
 			},
 			sys_registers::SUM => { self.perform_operation(&|l, r| { l + r }) },
+			sys_registers::EQ => {
+				Value::Int(if self.register_read(sys_registers::LHS) == self.register_read(sys_registers::RHS) {
+					1
+				} else {
+					0
+				})
+			},
 			sys_registers::DIFF => { self.perform_operation(&|l, r| { l - r }) },
 			sys_registers::PRODUCT => { self.perform_operation(&|l, r| { l * r }) },
 			sys_registers::QUOTIENT => { self.perform_operation(&|l, r| {

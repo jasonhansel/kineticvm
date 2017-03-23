@@ -41,6 +41,7 @@ pub mod sys_registers {
 	// Comparison & Logic
 	pub const MAX : Register = Register(22);
 	pub const MIN : Register = Register(23);
+	pub const EQ : Register = Register(25);
 	pub const NOT : Register = Register(4);
 
 	// Shifts
