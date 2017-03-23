@@ -22,6 +22,7 @@ pub struct Register(pub u16);
 /// System registers
 pub mod sys_registers {
 	use super::Register;
+
 	// Control flow
 	pub const PC : Register = Register(7);
 	pub const SKIP_INSTR : Register = Register(8);
@@ -37,9 +38,10 @@ pub mod sys_registers {
 	pub const DIFF : Register = Register(20);
 	pub const QUOTIENT : Register = Register(21);
 
-	// Comparison
+	// Comparison & Logic
 	pub const MAX : Register = Register(22);
 	pub const MIN : Register = Register(23);
+	pub const NOT : Register = Register(4);
 
 	// Shifts
 	pub const SHIFT_L : Register = Register(14);
@@ -47,10 +49,10 @@ pub mod sys_registers {
 	pub const SHIFT_AR : Register = Register(16);
 
 	// Bitwise operations
-	pub const NOT : Register = Register(4);
 	pub const BIT_AND : Register = Register(17);
 	pub const BIT_OR : Register = Register(18);
 	pub const BIT_XOR : Register = Register(19);
+	pub const BIT_NOT : Register = Register(24);
 
 	// Memory
 	pub const MEM_PTR : Register = Register(9);
@@ -61,7 +63,6 @@ pub mod sys_registers {
 	// I/O
 	pub const OUT : Register = Register(5);
 	pub const HALT : Register = Register(6);
-
 
 	// Number of system registers for which we allocate space
 	pub const MAX_SYS_REGISTER : u16 = 128;

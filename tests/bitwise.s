@@ -19,3 +19,8 @@
     1 -> %RHS
     %SHIFT_AR -> %OUT ; expect -2
 
+
+    8 -> %LHS
+    %BIT_NOT -> %OUT
+    %BIT_NOT -> %LHS
+    %BIT_NOT -> %OUT

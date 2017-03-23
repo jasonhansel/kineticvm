@@ -49,6 +49,7 @@ system_reg -> Register =
     / "BIT_AND" { sys_registers::BIT_AND }
     / "BIT_OR" { sys_registers::BIT_OR }
     / "BIT_XOR" { sys_registers::BIT_XOR }
+    / "BIT_NOT" { sys_registers::BIT_NOT }
     / "CODE_OBJECT" { sys_registers::CODE_OBJECT }
     / "DIFF" { sys_registers::DIFF }
     / "HALT" { sys_registers::HALT }

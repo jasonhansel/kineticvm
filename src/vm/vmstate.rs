@@ -63,6 +63,7 @@ impl VMState {
 			sys_registers::BIT_AND => { self.perform_operation(&|l, r| { l & r }) },
 			sys_registers::BIT_OR => { self.perform_operation(&|l, r| { l | r }) },
 			sys_registers::BIT_XOR => { self.perform_operation(&|l, r| { l ^ r }) },
+			sys_registers::BIT_NOT => { self.perform_operation(&|l, _| { !l }) },
 			sys_registers::MAX => { self.perform_operation(&|l, r| { cmp::max(l, r) }) },
 			sys_registers::MIN => { self.perform_operation(&|l, r| { cmp::min(l, r) }) },
 			
