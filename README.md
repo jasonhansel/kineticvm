@@ -32,12 +32,14 @@ The codebase itself is not fully documented at the moment, but `rustdoc` documen
 ### User-facing
 * Add more documentation (see above).
 * Make the assembler and CLI simpler and more user-friendly (perhaps splitting the assembler and the VM into separate binaries).
+    + One issue: assembler can't handle comments at EOF.
 * Write more complex tests. This may inspire new features.
 
 ### Architecture
 * Add more features by expanding the set of system registers:
-    + The [MIPS instruction set](http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html) may be a useful source of inspiration.
-* Rename (or alter the behavior of) existing registers for simplicity &c.
+    + The [MIPS instruction set](http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html) may be a useful source of inspiration, as will the [ABLE architecture](https://sites.google.com/site/macthenaief/Home/retro/able).
+    + We need: user input with EOF handling; character mode I/O.
+* Rename (or alter the behavior of) existing registers for simplicity &c. and **make sure** all registers are documented on the wiki
     
 ### Internals
 * Implement a proper garbage collector. Currently, the VM distinguishes between two types (integers and pointers); this feature should allow for [precise collection](https://en.wikipedia.org/wiki/Tracing_garbage_collection#Precise_vs._conservative_and_internal_pointers).
