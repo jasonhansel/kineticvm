@@ -44,33 +44,39 @@ dest_reg -> RegisterR<'input>
     = u:$(ident) { RegisterR::User(Ident::from_str(u)) }
     / "%" u:system_reg { RegisterR::System(u) }
 
-system_reg -> Register
-    = "LHS" { sys_registers::LHS }
-    / "RHS" { sys_registers::RHS }
-    / "SUM" { sys_registers::SUM }
-    / "NOT" { sys_registers::NOT }
-    / "OUT" { sys_registers::OUT }
-    / "HALT" { sys_registers::HALT }
-    / "PC" { sys_registers::PC }
-    / "SKIP_INSTR" { sys_registers::SKIP_INSTR }
-    / "MEM_PTR" { sys_registers::MEM_PTR }
-    / "MEM_OFFSET" { sys_registers::MEM_OFFSET }
-    / "MEM_VALUE" { sys_registers::MEM_VALUE }
-    / "MEM_OBJECT_SIZE" { sys_registers::MEM_OBJECT_SIZE }
-    / "CODE_OBJECT" { sys_registers::CODE_OBJECT }
-    / "PRODUCT" { sys_registers::PRODUCT }
-    / "SHIFT_LR" { sys_registers::SHIFT_LR }
-    / "SHIFT_L" { sys_registers::SHIFT_L }
-    / "SHIFT_AR" { sys_registers::SHIFT_AR }
+system_reg -> Register =
+      "LHS" { sys_registers::LHS }
     / "BIT_AND" { sys_registers::BIT_AND }
     / "BIT_OR" { sys_registers::BIT_OR }
     / "BIT_XOR" { sys_registers::BIT_XOR }
+    / "CODE_OBJECT" { sys_registers::CODE_OBJECT }
+    / "DIFF" { sys_registers::DIFF }
+    / "HALT" { sys_registers::HALT }
+    / "MEM_OBJECT_SIZE" { sys_registers::MEM_OBJECT_SIZE }
+    / "MEM_OFFSET" { sys_registers::MEM_OFFSET }
+    / "MEM_PTR" { sys_registers::MEM_PTR }
+    / "MEM_VALUE" { sys_registers::MEM_VALUE }
+    / "NOT" { sys_registers::NOT }
+    / "OUT" { sys_registers::OUT }
+    / "PC" { sys_registers::PC }
+    / "PRODUCT" { sys_registers::PRODUCT }
+    / "QUOTIENT" { sys_registers::QUOTIENT }
+    / "RHS" { sys_registers::RHS }
+    / "SHIFT_AR" { sys_registers::SHIFT_AR }
+    / "SHIFT_LR" { sys_registers::SHIFT_LR }
+    / "SHIFT_L" { sys_registers::SHIFT_L }
+    / "SKIP_INSTR" { sys_registers::SKIP_INSTR }
+    / "SUM" { sys_registers::SUM }
 
 
 // basic tokens
 
 ident -> &'input str
     = $([a-zA-Z_\-0-9]+)
+
+optional_comment
+    = white / white ";" [^\n]*
+
 
 end_of_line
     = white "\n"

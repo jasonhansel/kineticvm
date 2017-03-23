@@ -40,12 +40,22 @@ impl VMState {
 					_ => { panic!("Cannot read state!"); }
 				}
 			},
-			sys_registers::SUM => {
-				self.perform_operation(&|l, r| { l + r })
-			},
-			sys_registers::PRODUCT => {
-				self.perform_operation(&|l, r| { l * r })
-			},
+			sys_registers::SUM => { self.perform_operation(&|l, r| { l + r }) },
+			sys_registers::DIFF => { self.perform_operation(&|l, r| { l - r }) },
+			sys_registers::PRODUCT => { self.perform_operation(&|l, r| { l * r }) },
+			sys_registers::QUOTIENT => { self.perform_operation(&|l, r| {
+				if (l % r).abs() >= (r / 2) {
+					(l / r) + {
+						if (l / r) < 0 {
+							-1
+						} else {
+							1
+						}
+					}
+				} else {
+					l / r
+				}
+			}) },
 			sys_registers::SHIFT_L => { self.perform_operation(&|l, r| { l << r}) },
 			sys_registers::SHIFT_LR => { self.perform_operation(&|l, r| { ((l as u16) >> (r as u16)) as i16 }) },
 			sys_registers::SHIFT_AR => { self.perform_operation(&|l, r| { l >> r }) },

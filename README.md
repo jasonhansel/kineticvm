@@ -33,8 +33,11 @@ The codebase itself is not fully documented at the moment, but `rustdoc` documen
 * Add more documentation (see above).
 * Make the assembler and CLI simpler and more user-friendly (perhaps splitting the assembler and the VM into separate binaries).
 * Write more complex tests. This may inspire new features.
+
+### Architecture
 * Add more features by expanding the set of system registers:
     + The [MIPS instruction set](http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html) may be a useful source of inspiration.
+* Rename (or alter the behavior of) existing registers for simplicity &c.
     
 ### Internals
 * Implement a proper garbage collector. Currently, the VM distinguishes between two types (integers and pointers); this feature should allow for [precise collection](https://en.wikipedia.org/wiki/Tracing_garbage_collection#Precise_vs._conservative_and_internal_pointers).

@@ -34,6 +34,8 @@ pub mod sys_registers {
 	// Arithmetic
 	pub const SUM : Register = Register(3);
 	pub const PRODUCT : Register = Register(13);
+	pub const DIFF : Register = Register(20);
+	pub const QUOTIENT : Register = Register(21);
 
 	// Shifts
 	pub const SHIFT_L : Register = Register(14);
