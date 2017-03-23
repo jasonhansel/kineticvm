@@ -109,6 +109,7 @@ loop_start2:
 ; Print counted value to OUT
 	child_object -> %MEM_PTR
 	%SUM -> %MEM_OFFSET
+	%MEM_OBJECT_SIZE -> %OUT
 	%MEM_VALUE -> %OUT
 
 ; Decrement counter

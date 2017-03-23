@@ -59,6 +59,13 @@ system_reg -> Register
     / "MEM_OBJECT_SIZE" { sys_registers::MEM_OBJECT_SIZE }
     / "CODE_OBJECT" { sys_registers::CODE_OBJECT }
     / "PRODUCT" { sys_registers::PRODUCT }
+    / "SHIFT_LR" { sys_registers::SHIFT_LR }
+    / "SHIFT_L" { sys_registers::SHIFT_L }
+    / "SHIFT_AR" { sys_registers::SHIFT_AR }
+    / "BIT_AND" { sys_registers::BIT_AND }
+    / "BIT_OR" { sys_registers::BIT_OR }
+    / "BIT_XOR" { sys_registers::BIT_XOR }
+
 
 // basic tokens
 

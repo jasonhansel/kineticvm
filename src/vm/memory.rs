@@ -108,6 +108,14 @@ impl Memory {
 		}
 	}
 
+	pub fn get_size(&self, ptr: MemoryPtr) -> MemorySize {
+		let MemoryPtr(ptr) = ptr;
+		let ptr = ptr as usize;
+		let obj_size = self.data[ptr];
+		return MemorySize(obj_size);
+	}
+
+
 	pub fn set(&mut self, ptr: MemoryPtr, offset: u16, value: Value) {
 
 		let MemoryPtr(ptr) = ptr;

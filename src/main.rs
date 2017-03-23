@@ -22,22 +22,43 @@ pub struct Register(pub u16);
 /// System registers
 pub mod sys_registers {
 	use super::Register;
-	pub const CODE_OBJECT : Register = Register(0);
-	pub const LHS : Register = Register(1);
-	pub const RHS : Register = Register(2);
-	pub const SUM : Register = Register(3);
-	pub const NOT : Register = Register(4);
-	pub const OUT : Register = Register(5);
-	pub const HALT : Register = Register(6);
+	// Control flow
 	pub const PC : Register = Register(7);
 	pub const SKIP_INSTR : Register = Register(8);
+	pub const CODE_OBJECT : Register = Register(0);
+
+	// Input operands	
+	pub const LHS : Register = Register(1);
+	pub const RHS : Register = Register(2);
+
+	// Arithmetic
+	pub const SUM : Register = Register(3);
+	pub const PRODUCT : Register = Register(13);
+
+	// Shifts
+	pub const SHIFT_L : Register = Register(14);
+	pub const SHIFT_LR : Register = Register(15);
+	pub const SHIFT_AR : Register = Register(16);
+
+	// Bitwise operations
+	pub const NOT : Register = Register(4);
+	pub const BIT_AND : Register = Register(17);
+	pub const BIT_OR : Register = Register(18);
+	pub const BIT_XOR : Register = Register(19);
+
+	// Memory
 	pub const MEM_PTR : Register = Register(9);
 	pub const MEM_OFFSET : Register = Register(10);
 	pub const MEM_VALUE : Register = Register(11);
 	pub const MEM_OBJECT_SIZE : Register = Register(12);	
-	pub const PRODUCT : Register = Register(13);
 
-	pub const MAX_SYS_REGISTER : u16 = 13;
+	// I/O
+	pub const OUT : Register = Register(5);
+	pub const HALT : Register = Register(6);
+
+
+	// Number of system registers for which we allocate space
+	pub const MAX_SYS_REGISTER : u16 = 128;
 }
 
 

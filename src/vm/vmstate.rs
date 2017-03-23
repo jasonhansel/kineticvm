@@ -5,19 +5,6 @@ use std::io::Write;
 use super::memory::*;
 
 
-fn add_values(lhs: Value, rhs: Value) -> Value {
-	match (lhs, rhs) {
-		(Value::Int(l), Value::Int(r)) => Value::Int(l + r),
-		_ => Value::Int(0)
-	}
-}
-
-fn mult_values(lhs: Value, rhs: Value) -> Value {
-	match (lhs, rhs) {
-		(Value::Int(l), Value::Int(r)) => Value::Int(l * r),
-		_ => Value::Int(0)
-	}
-}
 
 pub struct VMState {
 	memory: Memory
@@ -28,6 +15,13 @@ impl VMState {
 	pub fn new(memory: Memory) -> VMState {
 		VMState {
 			memory: memory
+		}
+	}
+
+	fn perform_operation(&self, op : &Fn(i16, i16) -> i16) -> Value {
+		match (self.register_read(sys_registers::LHS), self.register_read(sys_registers::RHS)) {
+			(Value::Int(l), Value::Int(r)) => Value::Int(op(l, r)),
+			_ => Value::Int(0)
 		}
 	}
 
@@ -47,21 +41,24 @@ impl VMState {
 				}
 			},
 			sys_registers::SUM => {
-				let lhs = self.register_read(sys_registers::LHS);
-				let rhs = self.register_read(sys_registers::RHS);
-				return add_values(lhs, rhs);
+				self.perform_operation(&|l, r| { l + r })
 			},
 			sys_registers::PRODUCT => {
-				let lhs = self.register_read(sys_registers::LHS);
-				let rhs = self.register_read(sys_registers::RHS);
-				return mult_values(lhs, rhs);
+				self.perform_operation(&|l, r| { l * r })
 			},
-			sys_registers::NOT => {
-				let lhs = self.register_read(sys_registers::LHS);
-
-				return match lhs {
-					Value::Int(l) => {
-						Value::Int( if l == 0 { 1 } else { 0 } )
+			sys_registers::SHIFT_L => { self.perform_operation(&|l, r| { l << r}) },
+			sys_registers::SHIFT_LR => { self.perform_operation(&|l, r| { ((l as u16) >> (r as u16)) as i16 }) },
+			sys_registers::SHIFT_AR => { self.perform_operation(&|l, r| { l >> r }) },
+			sys_registers::BIT_AND => { self.perform_operation(&|l, r| { l & r }) },
+			sys_registers::BIT_OR => { self.perform_operation(&|l, r| { l | r }) },
+			sys_registers::BIT_XOR => { self.perform_operation(&|l, r| { l ^ r }) },
+			
+			sys_registers::NOT => { self.perform_operation(&|l, _| { if l == 0 { 1 } else { 0 } }) },
+			sys_registers::MEM_OBJECT_SIZE => {
+				match self.register_read(sys_registers::MEM_PTR) {
+					Value::Ptr(p) => {
+						let MemorySize(s) = self.memory.get_size(p);
+						Value::Int(s as i16)
 					},
 					_ => Value::Int(0)
 				}
@@ -84,7 +81,7 @@ impl VMState {
 				}
 			},
 			sys_registers::MEM_OBJECT_SIZE => {
-				let v = self.register_read(sys_registers::MEM_OBJECT_SIZE);
+				let v = self.memory.get_register(sys_registers::MEM_OBJECT_SIZE);
 				let ptr = self.memory.allocate_values(MemorySize::try_from(v).unwrap());
 				self.memory.set_register(sys_registers::MEM_PTR, Value::Ptr(ptr));
 			},

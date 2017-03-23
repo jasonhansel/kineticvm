@@ -29,9 +29,16 @@ The codebase itself is not fully documented at the moment, but `rustdoc` documen
 
 ## Future Plans
 
+### User-facing
 * Add more documentation (see above).
-* Make the assembler and CLI simpler and more user-friendly.
-* Add more features by expanding the set of system registers. The [MIPS instruction set](http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html) may be a useful source of inspiration. Writing larger tests may make it clearer what features are needed.
+* Make the assembler and CLI simpler and more user-friendly (perhaps splitting the assembler and the VM into separate binaries).
+* Write more complex tests. This may inspire new features.
+* Add more features by expanding the set of system registers:
+    + The [MIPS instruction set](http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html) may be a useful source of inspiration.
+    
+### Internals
 * Implement a proper garbage collector. Currently, the VM distinguishes between two types (integers and pointers); this feature should allow for [precise collection](https://en.wikipedia.org/wiki/Tracing_garbage_collection#Precise_vs._conservative_and_internal_pointers).
 * Create an integrated JIT compiler. It may be useful to have an LLVM backend, like [the one included in HHVM](http://hhvm.com/blog/10205/llvm-code-generation-in-hhvm).
+
+### Future directions
 * Write a compiler for a (reasonably) high-level language that targets KineticVM.
