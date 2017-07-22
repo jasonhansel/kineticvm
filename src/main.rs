@@ -27,6 +27,7 @@ pub mod sys_registers {
 	pub const PC : Register = Register(7);
 	pub const SKIP_INSTR : Register = Register(8);
 	pub const CODE_OBJECT : Register = Register(0);
+	pub const LINK : Register = Register(26);
 
 	// Input operands	
 	pub const LHS : Register = Register(1);

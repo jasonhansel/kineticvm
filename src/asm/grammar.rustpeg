@@ -71,6 +71,7 @@ system_reg -> Register =
     / "SUM" { sys_registers::SUM }
     / "MAX" { sys_registers::MAX }
     / "MIN" { sys_registers::MIN }
+    / "LINK" { sys_registers::LINK }
 
 
 // basic tokens

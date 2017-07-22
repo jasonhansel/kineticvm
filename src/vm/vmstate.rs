@@ -118,6 +118,12 @@ impl VMState {
 					_ => { panic!("Cannot write memory!"); }
 				}
 			},
+			sys_registers::LINK => {
+				let new_pc = self.register_read(sys_registers::PC);
+				let new_link = self.register_read(sys_registers::LINK);
+				self.memory.set_register(sys_registers::PC, new_link);
+				self.memory.set_register(sys_registers::LINK, new_pc);
+			}
 			_ => {}
 		}
 	}
