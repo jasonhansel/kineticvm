@@ -36,9 +36,8 @@ The codebase itself is not fully documented at the moment, but `rustdoc` documen
 * Write more complex tests. This may inspire new features.
 
 ### Architecture
-* Add more features by expanding the set of system registers:
-    + The [MIPS instruction set](http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html) may be a useful source of inspiration, as will the [ABLE architecture](https://sites.google.com/site/macthenaief/Home/retro/able).
-    + We need: user input with EOF handling; character mode I/O.
+* Numerical input
+* Support for read-only data (like `.data`)
 * Rename (or alter the behavior of) existing registers for simplicity &c. and **make sure** all registers are documented on the wiki
     
 ### Internals
