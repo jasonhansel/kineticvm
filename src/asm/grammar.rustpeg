@@ -72,6 +72,7 @@ system_reg -> Register =
     / "MAX" { sys_registers::MAX }
     / "MIN" { sys_registers::MIN }
     / "LINK" { sys_registers::LINK }
+    / "IO_CHAR" { sys_registers::IO_CHAR }
 
 
 // basic tokens

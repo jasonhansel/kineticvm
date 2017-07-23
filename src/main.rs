@@ -7,7 +7,7 @@ mod test;
 use std::slice;
 use std::fs::File;
 use std::env;
-use std::io::{Write, stdout, Read};
+use std::io::{Write, stdout, Read, stdin};
 use std::mem::size_of;
 
 
@@ -60,9 +60,10 @@ pub mod sys_registers {
 	pub const MEM_PTR : Register = Register(9);
 	pub const MEM_OFFSET : Register = Register(10);
 	pub const MEM_VALUE : Register = Register(11);
-	pub const MEM_OBJECT_SIZE : Register = Register(12);	
+	pub const MEM_OBJECT_SIZE : Register = Register(12);
 
 	// I/O
+	pub const IO_CHAR : Register = Register(27);
 	pub const OUT : Register = Register(5);
 	pub const HALT : Register = Register(6);
 
@@ -105,7 +106,7 @@ fn main() {
 			file.read_to_end(&mut object).unwrap();
 
 			// Now we execute it, printing the program's output to STDOUT.
-			execute_program(&object, &mut stdout());
+			execute_program(&object, &mut stdin(), &mut stdout());
 		}
 		_ => {
 			// Print usage information.

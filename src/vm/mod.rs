@@ -1,6 +1,6 @@
 
 mod memory;
-use std::io::Write;
+use std::io::{Read,Write};
 use super::{sys_registers, transmute_slice};
 
 use self::memory::*;
@@ -32,9 +32,9 @@ fn init_memory(program: Program) -> Memory {
 }
 
 
-fn execute(program: Program, output: &mut Write) {
+fn execute(program: Program, input: &mut Read, output: &mut Write) {
 	let mut vm = VMState::new(init_memory(program));
-	while vm.run_cycle(output) {}
+	while vm.run_cycle(input, output) {}
 }
 
 #[derive(Clone, Debug)]
@@ -46,7 +46,7 @@ struct Program<'a> {
 
 
 
-pub fn execute_program(program: &[u8], output: &mut Write) {
+pub fn execute_program(program: &[u8], input: &mut Read, output: &mut Write) {
     let p = bytes_to_program(program);
-	execute(p, output);
+	execute(p, input, output);
 }
